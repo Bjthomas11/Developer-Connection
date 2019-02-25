@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const passportJWT = require("passport-jwt");
+const SECRET = require("../../config/keys");
 const router = express.Router();
 
 // Load user model
@@ -72,7 +73,28 @@ router.post("/login", (req, res) => {
     // check password
     bcrypt.compare(password, user.password).then(isMatch => {
       if (isMatch) {
-        res.json({ message: "Success" });
+        // USER MATCHED
+        // created jwt payload
+        const payload = {
+          id: user.id,
+          name: user.name,
+          avatar: user.avatar
+        };
+
+        // sign the token
+        jwt.sign(
+          payload,
+          keys.SECRET,
+          {
+            expiresIn: 3600
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: `Bearer ${token}`
+            });
+          }
+        );
       } else {
         return res.status(400).json({ password: "Password incorrect" });
       }
