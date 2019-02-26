@@ -39,4 +39,59 @@ router.get(
   }
 );
 
+// @route POST api/profile
+// @desc create/Edit user profilexs
+// @access PROTECTED ROUTE
+router.post(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    // get fields
+    const profileFields = {};
+    profileFields.user = req.user.id;
+    if (req.body.handle) profileFields.handle = req.body.handle;
+    if (req.body.company) profileFields.company = req.body.company;
+    if (req.body.webiste) profileFields.website = req.body.website;
+    if (req.body.location) profileFields.location = req.body.location;
+    if (req.body.bio) profileFields.bio = req.body.bio;
+    if (req.body.status) profileFields.status = req.body.status;
+    if (req.body.githubUsername)
+      profileFields.githubUsername = req.body.githubUsername;
+    // skills - split into array
+    if (typeof req.body.skills !== "undefined") {
+      profileFields.skills = req.body.skills.split(",");
+    }
+    // social
+    profileFields.social = {};
+    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
+    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
+    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
+    if (req.body.linkedIn) profileFields.social.linkedIn = req.body.linkedIn;
+
+    Profile.findOne({ user: req.user.id }).then(profile => () => {
+      if (profile) {
+        // update the profile
+        Profile.findOneAndUpdate(
+          { user: req.user.id },
+          { $set: profile },
+          { new: true }
+        ).then(profile => res.json(profile));
+      } else {
+        // create
+        // check if handle exists
+        Profile.findOne({ handle: profileFields.handle }).then(profile => {
+          if (profile) {
+            errors.handle = "That handle already exits";
+            res.status(400).json(errors);
+          }
+
+          // save profile
+          new Profile(profileFields).save().then(profile => res.json(profile));
+        });
+      }
+    });
+  }
+);
+
 module.exports = router;
