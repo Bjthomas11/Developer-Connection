@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const keys = require("../../config/keys");
 const passport = require("passport");
 
-// load input validation
+// Load Input Validation
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 
@@ -24,7 +24,7 @@ router.get("/test", (req, res) => res.json({ msg: "Users Works" }));
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
-  // check validation
+  // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -67,10 +67,11 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
-  // check validation
+  // Check Validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
+
   const email = req.body.email;
   const password = req.body.password;
 
@@ -110,7 +111,7 @@ router.post("/login", (req, res) => {
 
 // @route   GET api/users/current
 // @desc    Return current user
-// @access  PROTECTED
+// @access  Private
 router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
