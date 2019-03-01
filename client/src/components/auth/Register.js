@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
 import classnames from "classnames";
+// used to connect redux to react component
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
+import PropTypes from "prop-types";
 
 class Register extends Component {
   constructor() {
@@ -28,15 +32,20 @@ class Register extends Component {
       password2: this.state.password2
     };
 
+    this.props.registerUser(newUser);
+
     // using axios to fetch the apis from server side routes
-    axios
-      .post("/api/users/register", newUser)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({ errors: err.response.data }));
+    // axios
+    //   .post("/api/users/register", newUser)
+    //   .then(res => console.log(res.data))
+    //   .catch(err => this.setState({ errors: err.response.data }));
   };
 
   render() {
     const { errors } = this.state;
+
+    // pulling out the user
+    const { user } = this.props.auth;
 
     return (
       <div className="register">
@@ -120,4 +129,17 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+};
+
+// putting auth in the state so I can access it later
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(Register);
