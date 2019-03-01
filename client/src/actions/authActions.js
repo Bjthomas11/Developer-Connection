@@ -1,9 +1,16 @@
 // register user actions
-import { TEST_DISPATCH } from "./types";
+import { GET_ERRORS } from "./types";
+import axios from "axios";
 
-export const registerUser = userData => {
-  return {
-    type: TEST_DISPATCH,
-    payload: userData
-  };
+export const registerUser = (userData, history) => dispatch => {
+  // using axios to fetch the apis from server side routes
+  axios
+    .post("/api/users/register", userData)
+    .then(res => history.push("/login"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
 };
