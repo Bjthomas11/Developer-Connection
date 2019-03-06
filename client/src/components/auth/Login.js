@@ -24,14 +24,11 @@ class Login extends Component {
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
+
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
   }
-
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
 
   onSubmit = e => {
     e.preventDefault();
@@ -40,8 +37,12 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+
     this.props.loginUser(userData);
-    console.log(userData);
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   render() {
@@ -54,7 +55,7 @@ class Login extends Component {
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
               <p className="lead text-center">
-                Sign in to your Developer account
+                Sign in to your Developer Connection account
               </p>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup

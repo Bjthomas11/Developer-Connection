@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import { Link, withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
 import TextFieldGroup from "../common/TextFieldGroup";
 import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import { addExperience } from "../../actions/profileActions";
 
 class AddExperience extends Component {
@@ -22,20 +22,15 @@ class AddExperience extends Component {
     };
   }
 
-  onChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
+      this.setState({ errors: nextProps.errors });
     }
   }
 
   onSubmit = e => {
     e.preventDefault();
+
     const expData = {
       company: this.state.company,
       title: this.state.title,
@@ -47,7 +42,10 @@ class AddExperience extends Component {
     };
 
     this.props.addExperience(expData, this.props.history);
-    console.log(expData);
+  };
+
+  onChange = e => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   onCheck = e => {
@@ -59,6 +57,7 @@ class AddExperience extends Component {
 
   render() {
     const { errors } = this.state;
+
     return (
       <div className="add-experience">
         <div className="container">
@@ -68,10 +67,10 @@ class AddExperience extends Component {
                 Go Back
               </Link>
               <h1 className="display-4 text-center">Add Experience</h1>
-              <p className="lead">
-                Add any job or position you have had previously
+              <p className="lead text-center">
+                Add any job or position that you have had in the past or current
               </p>
-              <small className="d-block pb-3">* = Required Fields</small>
+              <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>
                 <TextFieldGroup
                   placeholder="* Company"
@@ -88,13 +87,13 @@ class AddExperience extends Component {
                   error={errors.title}
                 />
                 <TextFieldGroup
-                  placeholder="* Location"
+                  placeholder="Location"
                   name="location"
                   value={this.state.location}
                   onChange={this.onChange}
                   error={errors.location}
                 />
-                <h6>From Date: </h6>
+                <h6>From Date</h6>
                 <TextFieldGroup
                   name="from"
                   type="date"
@@ -102,14 +101,14 @@ class AddExperience extends Component {
                   onChange={this.onChange}
                   error={errors.from}
                 />
-                <h6>To Date:</h6>
+                <h6>To Date</h6>
                 <TextFieldGroup
                   name="to"
                   type="date"
-                  disabled={this.state.disabled ? "disabled" : ""}
                   value={this.state.to}
                   onChange={this.onChange}
                   error={errors.to}
+                  disabled={this.state.disabled ? "disabled" : ""}
                 />
                 <div className="form-check mb-4">
                   <input
@@ -121,7 +120,7 @@ class AddExperience extends Component {
                     onChange={this.onCheck}
                     id="current"
                   />
-                  <label className="form-check-label" htmlFor="current">
+                  <label htmlFor="current" className="form-check-label">
                     Current Job
                   </label>
                 </div>
@@ -131,12 +130,12 @@ class AddExperience extends Component {
                   value={this.state.description}
                   onChange={this.onChange}
                   error={errors.description}
-                  info="Tell us about the position!"
+                  info="Tell us about the the position"
                 />
                 <input
                   type="submit"
-                  className="btn btn-info btn-block mt-4"
                   value="Submit"
+                  className="btn btn-info btn-block mt-4"
                 />
               </form>
             </div>

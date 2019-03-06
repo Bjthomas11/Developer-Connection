@@ -7,9 +7,9 @@ const InputGroup = ({
   placeholder,
   value,
   error,
-  onChange,
   icon,
-  type
+  type,
+  onChange
 }) => {
   return (
     <div className="input-group mb-3">
@@ -38,8 +38,8 @@ InputGroup.propTypes = {
   value: PropTypes.string.isRequired,
   icon: PropTypes.string,
   error: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
 };
 
 InputGroup.defaultProps = {

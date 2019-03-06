@@ -6,16 +6,15 @@ import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
 
 class Navbar extends Component {
-  onLogoutClick = e => {
+  onLogoutClick(e) {
     e.preventDefault();
     this.props.clearCurrentProfile();
     this.props.logoutUser();
-  };
+  }
+
   render() {
-    // pull out isAuthicated and the user
     const { isAuthenticated, user } = this.props.auth;
 
-    // create 1 variable based on when user is logged in or not
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
@@ -24,13 +23,17 @@ class Navbar extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <a onClick={this.onLogoutClick} href="#/" className="nav-link">
+          <a
+            href=""
+            onClick={this.onLogoutClick.bind(this)}
+            className="nav-link"
+          >
             <img
               className="rounded-circle"
               src={user.avatar}
               alt={user.name}
-              title="You must have Gravatar connected to email to display avatar"
               style={{ width: "25px", marginRight: "5px" }}
+              title="You must have a Gravatar connected to your email to display an image"
             />
             Logout
           </a>
@@ -38,7 +41,6 @@ class Navbar extends Component {
       </ul>
     );
 
-    // create 1 variable based on when user is logged in or not
     const guestLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
@@ -55,7 +57,6 @@ class Navbar extends Component {
     );
 
     return (
-      //  NAVBAR
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
         <div className="container">
           <Link className="navbar-brand" to="/">
