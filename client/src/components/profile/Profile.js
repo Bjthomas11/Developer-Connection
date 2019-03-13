@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import ProfileHeader from "./ProfileHeader";
 import ProfileAbout from "./ProfileAbout";
-import ProfileGithub from "./ProfileGithub";
 import ProfileCreds from "./ProfileCreds";
+import ProfileGithub from "./ProfileGithub";
 import Spinner from "../common/Spinner";
 import { getProfileByHandle } from "../../actions/profileActions";
 
@@ -24,7 +24,6 @@ class Profile extends Component {
 
   render() {
     const { profile, loading } = this.props.profile;
-
     let profileContent;
 
     if (profile === null || loading) {
@@ -37,10 +36,9 @@ class Profile extends Component {
               <Link to="/profiles" className="btn btn-light mb-3 float-left">
                 Back To Profiles
               </Link>
-              <div className="col-md-6" />
             </div>
+            <div className="col-md-6" />
           </div>
-
           <ProfileHeader profile={profile} />
           <ProfileAbout profile={profile} />
           <ProfileCreds
@@ -53,6 +51,7 @@ class Profile extends Component {
         </div>
       );
     }
+
     return (
       <div className="profile">
         <div className="container">

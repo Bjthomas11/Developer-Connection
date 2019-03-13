@@ -16,7 +16,6 @@ class ProfileGithub extends Component {
 
   componentDidMount() {
     const { username } = this.props;
-
     const { count, sort, clientId, clientSecret } = this.state;
 
     fetch(
@@ -24,9 +23,9 @@ class ProfileGithub extends Component {
     )
       .then(res => res.json())
       .then(data => {
-        this.setState = {
-          repos: data
-        };
+        if (this.refs.myRef) {
+          this.setState({ repos: data });
+        }
       })
       .catch(err => console.log(err));
   }
@@ -52,21 +51,18 @@ class ProfileGithub extends Component {
             <span className="badge badge-secondary mr-1">
               Watchers: {repo.watchers_count}
             </span>
-            <span className="badge badge-success mr-1">
+            <span className="badge badge-success">
               Forks: {repo.forks_count}
             </span>
           </div>
         </div>
       </div>
     ));
-
     return (
-      <div>
+      <div ref="myRef">
         <hr />
-        <h3 className="mb-4">
-          Latest GitHub Repos
-          {repoItems}
-        </h3>
+        <h3 className="mb-4">Latest Github Repos</h3>
+        {repoItems}
       </div>
     );
   }
