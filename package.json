@@ -2,14 +2,13 @@
   "name": "developerconnection",
   "version": "1.0.0",
   "engines": {
-    "node": "10.12.0"
+    "node": ">=10.12.0"
   },
   "description": "Social Network for Developers",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
-    "build": "webpack",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
