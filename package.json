@@ -1,6 +1,9 @@
 {
-  "name": "devconnecter",
+  "name": "developer connection",
   "version": "1.0.0",
+  "engines": {
+    "node": "10.12.0"
+  },
   "description": "Social Network for Developers",
   "main": "server.js",
   "scripts": {
